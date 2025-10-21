@@ -56,13 +56,20 @@ fun loginScreen() {
     var correo by remember { mutableStateOf("") }
     var clave by remember { mutableStateOf("") }
     var confirmClave by remember { mutableStateOf("") }
+<<<<<<< HEAD
     var sede by remember { mutableStateOf("") }
+=======
+>>>>>>> origin/master
     var mensaje by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxSize() // Ocupe toda la pantalla del celular
+<<<<<<< HEAD
             .background(Color(0xFFEDF2F7)) // Para agregar un color 0xFF______
+=======
+            .background(Color(0xFFEAAC8B)) // Para agregar un color 0xFF______
+>>>>>>> origin/master
             .padding(24.dp), // dp = Se adapta a los pixeles de la pantalla
         horizontalAlignment = Alignment.CenterHorizontally, // Centrado horizontal
         verticalArrangement = Arrangement.Center // Centrado vertical
@@ -71,7 +78,11 @@ fun loginScreen() {
             painter = painterResource(id = R.drawable.logo), // Cargamos el logo
             contentDescription = "Logotipo Oficial Del restaurante",
             modifier = Modifier
+<<<<<<< HEAD
                 .height(100.dp)
+=======
+                .height(200.dp)
+>>>>>>> origin/master
                 .padding(bottom = 32.dp)
         )
 
@@ -117,6 +128,7 @@ fun loginScreen() {
 
         Spacer(modifier = Modifier.height(20.dp))
 
+<<<<<<< HEAD
         // Campo Sede
         TextField(
             value = sede,
@@ -126,6 +138,8 @@ fun loginScreen() {
         )
 
         Spacer(modifier = Modifier.height(20.dp))
+=======
+>>>>>>> origin/master
 
         // Botón de Registrar
         Button(
@@ -136,22 +150,53 @@ fun loginScreen() {
                     correo.isEmpty() -> mensaje = "El campo Correo Electrónico es obligatorio."
                     clave.isEmpty() -> mensaje = "El campo Contraseña es obligatorio."
                     confirmClave.isEmpty() -> mensaje = "El campo Confirmar Contraseña es obligatorio."
+<<<<<<< HEAD
                     sede.isEmpty() -> mensaje = "El campo Sede es obligatorio."
                     clave != confirmClave -> mensaje = "Las contraseñas no coinciden."
                     else -> mensaje = "Registro exitoso: \nNombre: $nombre\nCorreo: $correo\nSede: $sede"
+=======
+
+                    clave != confirmClave -> mensaje = "Las contraseñas no coinciden."
+                    else -> mensaje = "Registro exitoso: \nNombre: $nombre\nCorreo: $correo\n"
+>>>>>>> origin/master
                 }
             },
 
 
             colors = ButtonDefaults.buttonColors(
+<<<<<<< HEAD
                 containerColor = Color(0xFFCCCCFF), // Color fondo
                 contentColor = Color(0xFF000000) // Color de texto
+=======
+                containerColor = Color(0xFFD8572A), // Color fondo
+                contentColor = Color(0xFFFFFFFF) // Color de texto
+>>>>>>> origin/master
             )
         ) {
             Text("Registrar")
         }
 
+<<<<<<< HEAD
         Spacer(modifier = Modifier.height(20.dp))
+=======
+        Spacer(modifier = Modifier.height(5.dp))
+
+
+        // Botón de login
+        Button(
+            onClick = {
+                // Validación
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xB0DE7651), // Color fondo
+                contentColor = Color(0xFFFFFFFF) // Color de texto
+            )
+        ) {
+            Text("Iniciar Sesión")
+        }
+
+
+>>>>>>> origin/master
 
         // Mostrar mensaje de validación
         if (mensaje.isNotEmpty()) {
@@ -172,5 +217,8 @@ fun LoginPreview() {
         loginScreen()
     }
 }
+<<<<<<< HEAD
 //comentario00
 //sadasdaasdad
+=======
+>>>>>>> origin/master
