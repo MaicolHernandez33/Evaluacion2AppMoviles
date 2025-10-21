@@ -61,7 +61,7 @@ fun loginScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize() // Ocupe toda la pantalla del celular
-            .background(Color(0xFFEDF2F7)) // Para agregar un color 0xFF______
+            .background(Color(0xFFEAAC8B)) // Para agregar un color 0xFF______
             .padding(24.dp), // dp = Se adapta a los pixeles de la pantalla
         horizontalAlignment = Alignment.CenterHorizontally, // Centrado horizontal
         verticalArrangement = Arrangement.Center // Centrado vertical
@@ -70,7 +70,7 @@ fun loginScreen() {
             painter = painterResource(id = R.drawable.logo), // Cargamos el logo
             contentDescription = "Logotipo Oficial Del restaurante",
             modifier = Modifier
-                .height(100.dp)
+                .height(200.dp)
                 .padding(bottom = 32.dp)
         )
 
@@ -126,21 +126,38 @@ fun loginScreen() {
                     correo.isEmpty() -> mensaje = "El campo Correo Electrónico es obligatorio."
                     clave.isEmpty() -> mensaje = "El campo Contraseña es obligatorio."
                     confirmClave.isEmpty() -> mensaje = "El campo Confirmar Contraseña es obligatorio."
+
                     clave != confirmClave -> mensaje = "Las contraseñas no coinciden."
-                    else -> mensaje = "Registro exitoso: \nNombre: $nombre\nCorreo: $correo"
+                    else -> mensaje = "Registro exitoso: \nNombre: $nombre\nCorreo: $correo\n"
                 }
             },
 
 
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFCCCCFF), // Color fondo
-                contentColor = Color(0xFF000000) // Color de texto
+                containerColor = Color(0xFFD8572A), // Color fondo
+                contentColor = Color(0xFFFFFFFF) // Color de texto
             )
         ) {
             Text("Registrar")
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(5.dp))
+
+
+        // Botón de login
+        Button(
+            onClick = {
+                // Validación
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xB0DE7651), // Color fondo
+                contentColor = Color(0xFFFFFFFF) // Color de texto
+            )
+        ) {
+            Text("Iniciar Sesión")
+        }
+
+
 
         // Mostrar mensaje de validación
         if (mensaje.isNotEmpty()) {
