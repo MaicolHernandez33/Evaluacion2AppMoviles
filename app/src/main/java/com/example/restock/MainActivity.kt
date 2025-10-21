@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.restock.ui.theme.RestockTheme
+import com.example.restock.ui.theme.titulos
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,6 +74,8 @@ fun loginScreen() {
                 .height(200.dp)
                 .padding(bottom = 32.dp)
         )
+        Text(text="¡Bienvenid@!", fontSize = 30.sp, color= titulos)
+        Spacer(modifier = Modifier.height(10.dp))
 
         // Campo Nombre Completo
         TextField(
