@@ -1,6 +1,5 @@
 package com.example.restock.ui.screens.auth
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -28,6 +27,20 @@ fun LoginScreen(
     var correo by remember { mutableStateOf("") }
     var clave  by remember { mutableStateOf("") }
     var mensaje by remember { mutableStateOf("") }
+
+    // reglas simples
+    fun correoValido(s: String) =
+        android.util.Patterns.EMAIL_ADDRESS.matcher(s.trim()).matches()
+
+    fun validar(): String? {
+        val mail = correo.trim()
+        val pass = clave.trim()
+        if (mail.isBlank()) return "Ingresa tu correo electrónico."
+        if (!correoValido(mail)) return "Correo electrónico inválido."
+        if (pass.isBlank()) return "Ingresa tu contraseña."
+        if (pass.length < 6) return "La contraseña debe tener al menos 6 caracteres."
+        return null
+    }
 
     Column(
         modifier = Modifier
@@ -64,28 +77,26 @@ fun LoginScreen(
 
         Spacer(Modifier.height(20.dp))
 
-        // Botón: Iniciar sesión
         Button(
             onClick = {
-                mensaje = when {
-                    correo.isEmpty() -> "Ingresa tu correo electrónico."
-                    clave.isEmpty()  -> "Ingresa tu contraseña."
-                    else -> {
-                        onLoginOK()
-                        "Inicio de sesión correcto."
-                    }
+                val err = validar()
+                if (err != null) {
+                    mensaje = err
+                } else {
+                    mensaje = "Inicio de sesión correcto."
+                    onLoginOK()
                 }
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xB0DE7651),
                 contentColor   = Color(0xFFFFFFFF)
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            enabled = correo.isNotBlank() && clave.isNotBlank()
         ) { Text("Iniciar Sesión") }
 
         Spacer(Modifier.height(5.dp))
 
-        // Botón: Ir a registro
         Button(
             onClick = { onGoToRegister() },
             colors = ButtonDefaults.buttonColors(

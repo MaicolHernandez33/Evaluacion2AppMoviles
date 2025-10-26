@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import com.example.restock.ui.screens.auth.LoginScreen
 import com.example.restock.ui.screens.auth.RegisterScreen
+import com.example.restock.ui.screens.home.HomeScreen
 import com.example.restock.ui.theme.RestockTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,24 +17,25 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RestockTheme {
-                // Con esto alternas entre Login y Registro
-                var showLogin by rememberSaveable { mutableStateOf(true) }
+                // login -> register -> home (estado simple y guardable)
+                var screen by rememberSaveable { mutableStateOf("login") }
 
-                if (showLogin) {
-                    LoginScreen(
-                        onLoginOK = {
-                            // aquí luego irás a Home;
-
-                        },
-                        onGoToRegister = { showLogin = false }
+                when (screen) {
+                    "login" -> LoginScreen(
+                        onLoginOK = { screen = "home" },
+                        onGoToRegister = { screen = "register" }
                     )
-                } else {
-                    RegisterScreen(
-                        onRegistered = {
-                            // después de registrarse puedes volver a login o ir a Home
-                            showLogin = true
-                        },
-                        onGoToLogin = { showLogin = true }
+
+                    "register" -> RegisterScreen(
+                        onRegistered = { screen = "home" },
+                        onGoToLogin = { screen = "login" }
+                    )
+
+                    "home" -> HomeScreen(
+                        onGoToCatalogo = { /* TODO */ },
+                        onGoToNosotros = { /* TODO */ },
+                        onGoToContacto = { /* TODO */ },
+                        onLogout = { screen = "login" }
                     )
                 }
             }
