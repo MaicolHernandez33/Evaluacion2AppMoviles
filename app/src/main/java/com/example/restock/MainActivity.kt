@@ -4,8 +4,23 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.restock.ui.screens.auth.LoginScreen
 import com.example.restock.ui.screens.auth.RegisterScreen
 import com.example.restock.ui.screens.home.HomeScreen
@@ -43,7 +58,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-<<<<<<< HEAD
 
 
 @Composable
@@ -177,5 +191,4 @@ fun LoginPreview() {
         loginScreen()
     }
 }
-=======
->>>>>>> d958ad6a1859e12b7d349e410cd50b93dc7f98dd
+
