@@ -1,4 +1,4 @@
-package com.example.restock.ui.screens.home
+package com.example.restock.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
