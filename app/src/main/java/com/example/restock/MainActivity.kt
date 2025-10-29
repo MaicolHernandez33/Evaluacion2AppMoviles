@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.example.restock.ui.screens.auth.LoginScreen
 import com.example.restock.ui.screens.auth.RegisterScreen
 import com.example.restock.ui.screens.home.HomeScreen
+import com.example.restock.ui.screens.*
 import com.example.restock.ui.theme.RestockTheme
 import com.example.restock.ui.theme.titulos
 
@@ -33,7 +34,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RestockTheme {
-                // login -> register -> home (estado simple y guardable)
                 var screen by rememberSaveable { mutableStateOf("login") }
 
                 when (screen) {
@@ -48,10 +48,22 @@ class MainActivity : ComponentActivity() {
                     )
 
                     "home" -> HomeScreen(
-                        onGoToCatalogo = { /* TODO */ },
-                        onGoToNosotros = { /* TODO */ },
-                        onGoToContacto = { /* TODO */ },
+                        onGoToCatalogo = { screen = "catalogo" },
+                        onGoToNosotros = { screen = "nosotros" },
+                        onGoToContacto = { screen = "contacto" },
                         onLogout = { screen = "login" }
+                    )
+
+
+                    "nosotros" -> NosotrosScreen(
+                        onBack = { screen = "home" }
+                    )
+
+                    "contacto" -> ContactoScreen(
+                        onBack = { screen = "home" },
+                        onEnviar = { nombre, correo, msg ->
+                            // TODO: enviar/guardar mensaje
+                        }
                     )
                 }
             }
