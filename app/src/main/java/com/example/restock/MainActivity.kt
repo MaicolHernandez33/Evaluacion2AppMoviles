@@ -30,7 +30,7 @@ import com.example.restock.ui.theme.titulos
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onCreat e(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             RestockTheme {
