@@ -28,7 +28,6 @@ La app permite explorar el menú, realizar pedidos y contactar al restaurante , 
 
 - **Lenguaje**: Kotlin
 - **Arquitectura**: MVVM (Model-View-ViewModel)
-- **Navegación**: Navigation Component
 - **Persistencia**: LocalStorage 
 - **UI**: Jetpack Compose
 - **Control de versiones**: GitHub
