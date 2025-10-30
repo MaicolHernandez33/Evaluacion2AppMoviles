@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.restock.R
+import com.example.restock.ui.theme.*
 
 @Composable
 fun LoginScreen(
@@ -29,7 +30,6 @@ fun LoginScreen(
     var clave  by remember { mutableStateOf("") }
     var mensajeLocal by remember { mutableStateOf("") }
 
-    val Orange = Color(0xFFD8572A)
 
     fun validar(): String? {
         val mail = correo.trim()
@@ -44,7 +44,7 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFEAAC8B))
+            .background(fondo)
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -85,7 +85,7 @@ fun LoginScreen(
                 }
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Orange,
+                containerColor = naranjo,
                 contentColor   = Color.White
             ),
             modifier = Modifier.fillMaxWidth()
@@ -96,7 +96,7 @@ fun LoginScreen(
         Button(
             onClick = onGoToRegister,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Orange,
+                containerColor = naranjo,
                 contentColor   = Color.White
             ),
             modifier = Modifier.fillMaxWidth()

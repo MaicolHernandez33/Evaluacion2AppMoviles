@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.restock.R
+import com.example.restock.ui.theme.*
 
 @Composable
 fun HomeScreen(
@@ -21,12 +22,11 @@ fun HomeScreen(
     onGoToContacto: () -> Unit = {},
     onLogout: () -> Unit = {}
 ) {
-    val Orange = Color(0xFFD8572A)
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFEAAC8B))
+            .background(fondo)
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -48,7 +48,7 @@ fun HomeScreen(
         Button(
             onClick = onGoToCatalogo,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Orange,
+                containerColor = naranjo,
                 contentColor = Color.White
             ),
             modifier = Modifier.fillMaxWidth()
@@ -59,7 +59,7 @@ fun HomeScreen(
         Button(
             onClick = onGoToNosotros,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Orange,
+                containerColor = naranjo,
                 contentColor = Color.White
             ),
             modifier = Modifier.fillMaxWidth()
@@ -70,7 +70,7 @@ fun HomeScreen(
         Button(
             onClick = onGoToContacto,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Orange,
+                containerColor = naranjo,
                 contentColor = Color.White
             ),
             modifier = Modifier.fillMaxWidth()
@@ -83,7 +83,7 @@ fun HomeScreen(
         Button(
             onClick = onLogout,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Orange,
+                containerColor = naranjo,
                 contentColor = Color.White
             ),
             modifier = Modifier

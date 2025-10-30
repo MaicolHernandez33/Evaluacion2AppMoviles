@@ -45,9 +45,11 @@ class MainActivity : ComponentActivity() {
                             onLogout = { vm.logout() }
                         )
 
-                        Screen.CATALOGO -> CatalogoScreen(onBack = { vm.goTo(Screen.HOME) }, onAgregar = { })
+
+                        Screen.CATALOGO -> CatalogoScreen(onBack = { vm.goTo(Screen.HOME) }, onGoToCarrito = { vm.goTo(Screen.CARRITO) },carrito = vm.carrito)
                         Screen.NOSOTROS -> NosotrosScreen(onBack = { vm.goTo(Screen.HOME) })
                         Screen.CONTACTO -> ContactoScreen(onBack = { vm.goTo(Screen.HOME) }, onEnviar = { _,_,_ -> })
+                        Screen.CARRITO -> CarritoScreen(carrito = vm.carrito, onBack = { vm.goTo(Screen.CATALOGO) })
                     }
                 }
             }

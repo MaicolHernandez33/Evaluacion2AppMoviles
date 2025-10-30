@@ -15,18 +15,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.restock.R
+import com.example.restock.ui.theme.*
 
 @Composable
 fun NosotrosScreen(
     onBack: () -> Unit = {}
 ) {
-    val peach = Color(0xFFEAAC8B)
-    val orange = Color(0xFFD8572A)
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(peach)
+            .background(fondo)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -38,7 +37,7 @@ fun NosotrosScreen(
             Button(
                 onClick = onBack,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = orange, contentColor = Color.White
+                    containerColor = naranjo, contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(20.dp)
             ) { Text("Volver") }
