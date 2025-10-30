@@ -76,8 +76,8 @@ fun CatalogoScreen(
                 Card(
                     modifier = Modifier
                         .padding(8.dp)
-                        .fillMaxWidth()
-                        .background(naranjo),
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
                     colors = CardDefaults.cardColors(containerColor = naranjo)
 
                 ) {
