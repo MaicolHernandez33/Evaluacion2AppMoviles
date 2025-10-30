@@ -10,14 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.restock.ui.theme.*
 
 @Composable
 fun ContactoScreen(
     onBack: () -> Unit = {},
     onEnviar: (nombre: String, correo: String, mensaje: String) -> Unit = { _,_,_ -> }
 ) {
-    val peach = Color(0xFFEAAC8B)
-    val orange = Color(0xFFD8572A)
 
     var nombre by remember { mutableStateOf("") }
     var correo by remember { mutableStateOf("") }
@@ -30,7 +29,7 @@ fun ContactoScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(peach)
+            .background(fondo)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -42,7 +41,7 @@ fun ContactoScreen(
             Button(
                 onClick = onBack,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = orange, contentColor = Color.White
+                    containerColor = naranjo, contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(20.dp)
             ) { Text("Volver") }
@@ -117,7 +116,7 @@ fun ContactoScreen(
                         }
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = orange, contentColor = Color.White
+                        containerColor = naranjo, contentColor = Color.White
                     ),
                     shape = RoundedCornerShape(24.dp),
                     modifier = Modifier.fillMaxWidth()

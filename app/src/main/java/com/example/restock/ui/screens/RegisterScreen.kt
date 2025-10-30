@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.restock.R
+import com.example.restock.ui.theme.*
 
 @Composable
 fun RegisterScreen(
@@ -29,8 +30,6 @@ fun RegisterScreen(
     var clave by remember { mutableStateOf("") }
     var confirmClave by remember { mutableStateOf("") }
     var mensajeLocal by remember { mutableStateOf("") }
-
-    val Orange = Color(0xFFD8572A)
 
     fun validar(): String? {
         if (nombre.isBlank()) return "El campo Nombre Completo es obligatorio."
@@ -104,7 +103,7 @@ fun RegisterScreen(
                 }
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Orange,
+                containerColor = naranjo,
                 contentColor   = Color.White
             ),
             modifier = Modifier.fillMaxWidth()
@@ -115,7 +114,7 @@ fun RegisterScreen(
         Button(
             onClick = onGoToLogin,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Orange,
+                containerColor = naranjo,
                 contentColor   = Color.White
             ),
             modifier = Modifier.fillMaxWidth()

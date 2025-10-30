@@ -1,6 +1,7 @@
 package com.example.restock.viewmodel
 
 import android.app.Application
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.restock.data.LocalStorage
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 // Rutas/pantallas simples
-enum class Screen { LOGIN, REGISTER, HOME, CATALOGO, NOSOTROS, CONTACTO }
+enum class Screen { LOGIN, REGISTER, HOME, CATALOGO, NOSOTROS, CONTACTO, CARRITO }
 
 data class UiState(
     val screen: Screen = Screen.LOGIN,
@@ -19,7 +20,7 @@ data class UiState(
 )
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
-
+    val carrito = mutableStateListOf<Pair<Int, String>>()
     private val _ui = MutableStateFlow(UiState())
     val ui: StateFlow<UiState> = _ui
 
