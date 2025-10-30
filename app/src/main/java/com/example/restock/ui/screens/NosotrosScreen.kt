@@ -65,7 +65,7 @@ fun NosotrosScreen(
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.logo),
-                        contentDescription = "Logo",
+                        contentDescription = "Logo1",
                         modifier = Modifier
                             .height(90.dp)
                             .padding(bottom = 8.dp)

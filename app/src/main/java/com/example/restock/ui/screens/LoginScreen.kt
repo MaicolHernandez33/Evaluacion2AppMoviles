@@ -14,30 +14,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.restock.R
-import com.example.restock.ui.theme.RestockTheme
 
 @Composable
 fun LoginScreen(
     onLoginOK: () -> Unit = {},
-    onGoToRegister: () -> Unit = {}
+    onGoToRegister: () -> Unit = {},
+    onSubmitLogin: (String, String) -> Unit = { _, _ -> },
+    snack: String? = null
 ) {
     var correo by remember { mutableStateOf("") }
     var clave  by remember { mutableStateOf("") }
-    var mensaje by remember { mutableStateOf("") }
+    var mensajeLocal by remember { mutableStateOf("") }
 
-    // reglas simples
-    fun correoValido(s: String) =
-        Patterns.EMAIL_ADDRESS.matcher(s.trim()).matches()
+    val Orange = Color(0xFFD8572A)
 
     fun validar(): String? {
         val mail = correo.trim()
         val pass = clave.trim()
         if (mail.isBlank()) return "Ingresa tu correo electrónico."
-        if (!correoValido(mail)) return "Correo electrónico inválido."
+        if (!Patterns.EMAIL_ADDRESS.matcher(mail).matches()) return "Correo electrónico inválido."
         if (pass.isBlank()) return "Ingresa tu contraseña."
         if (pass.length < 6) return "La contraseña debe tener al menos 6 caracteres."
         return null
@@ -80,47 +78,47 @@ fun LoginScreen(
 
         Button(
             onClick = {
-                val err = validar()
-                if (err != null) {
-                    mensaje = err
-                } else {
-                    mensaje = "Inicio de sesión correcto."
-                    onLoginOK()
+                validar()?.let { mensajeLocal = it } ?: run {
+                    // Delegamos la lógica al ViewModel
+                    onSubmitLogin(correo.trim(), clave.trim())
+                    mensajeLocal = "" // limpiamos mensaje local
                 }
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xB0DE7651),
-                contentColor   = Color(0xFFFFFFFF)
+                containerColor = Orange,
+                contentColor   = Color.White
             ),
-            modifier = Modifier.fillMaxWidth(),
-            enabled = correo.isNotBlank() && clave.isNotBlank()
+            modifier = Modifier.fillMaxWidth()
         ) { Text("Iniciar Sesión") }
 
-        Spacer(Modifier.height(5.dp))
+        Spacer(Modifier.height(8.dp))
 
         Button(
-            onClick = { onGoToRegister() },
+            onClick = onGoToRegister,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFD8572A),
-                contentColor   = Color(0xFFFFFFFF)
+                containerColor = Orange,
+                contentColor   = Color.White
             ),
             modifier = Modifier.fillMaxWidth()
         ) { Text("Registrarse") }
 
-        if (mensaje.isNotEmpty()) {
+        // Mensaje local de validación
+        if (mensajeLocal.isNotEmpty()) {
             Spacer(Modifier.height(12.dp))
             Text(
-                text = mensaje,
-                fontSize = 18.sp,
-                color = if (mensaje.contains("correcto", ignoreCase = true))
-                    Color(0xFF2E7D32) else Color(0xFFc62828)
+                text = mensajeLocal,
+                fontSize = 16.sp,
+                color = Color(0xFFC62828)
+            )
+        }
+        // Mensaje que venga del ViewModel (snack)
+        if (!snack.isNullOrBlank()) {
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = snack,
+                fontSize = 16.sp,
+                color = if (snack.contains("correcto", true)) Color(0xFF2E7D32) else Color(0xFFC62828)
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewLoginScreen() {
-    RestockTheme { LoginScreen() }
 }
