@@ -4,10 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.animation.Crossfade
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.restock.ui.screens.*
 import com.example.restock.ui.theme.RestockTheme
+import com.example.restock.viewmodel.MainViewModel
+import com.example.restock.viewmodel.Screen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,37 +19,36 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RestockTheme {
-                var screen by rememberSaveable { mutableStateOf("login") }
+                val vm: MainViewModel = viewModel()
+                val ui by vm.ui.collectAsState()
 
-                when (screen) {
-                    "login" -> LoginScreen(
-                        onLoginOK = { screen = "home" },
-                        onGoToRegister = { screen = "register" }
-                    )
+                Crossfade(ui.screen, label = "screen") { sc ->
+                    when (sc) {
+                        Screen.LOGIN -> LoginScreen(
+                            onLoginOK = { /* el VM cambiará a HOME */ },
+                            onGoToRegister = { vm.goTo(Screen.REGISTER) },
+                            onSubmitLogin = { email, pass -> vm.login(email, pass) },
+                            snack = ui.message
+                        )
 
-                    "register" -> RegisterScreen(
-                        onRegistered = { screen = "home" },
-                        onGoToLogin = { screen = "login" }
-                    )
+                        Screen.REGISTER -> RegisterScreen(
+                            onRegistered = { /* el VM cambiará a HOME */ },
+                            onGoToLogin = { vm.goTo(Screen.LOGIN) },
+                            onSubmitRegister = { name, email, pass -> vm.register(name, email, pass) },
+                            snack = ui.message
+                        )
 
-                    "home" -> HomeScreen(
-                        onGoToCatalogo = { screen = "catalogo" },
-                        onGoToNosotros = { screen = "nosotros" },
-                        onGoToContacto = { screen = "contacto" },
-                        onLogout = { screen = "login" }
-                    )
+                        Screen.HOME -> HomeScreen(
+                            onGoToCatalogo = { vm.goTo(Screen.CATALOGO) },
+                            onGoToNosotros = { vm.goTo(Screen.NOSOTROS) },
+                            onGoToContacto = { vm.goTo(Screen.CONTACTO) },
+                            onLogout = { vm.logout() }
+                        )
 
-
-                    "nosotros" -> NosotrosScreen(
-                        onBack = { screen = "home" }
-                    )
-
-                    "contacto" -> ContactoScreen(
-                        onBack = { screen = "home" },
-                        onEnviar = { nombre, correo, msg ->
-                            // TODO: enviar/guardar mensaje
-                        }
-                    )
+                        Screen.CATALOGO -> CatalogoScreen(onBack = { vm.goTo(Screen.HOME) }, onAgregar = { })
+                        Screen.NOSOTROS -> NosotrosScreen(onBack = { vm.goTo(Screen.HOME) })
+                        Screen.CONTACTO -> ContactoScreen(onBack = { vm.goTo(Screen.HOME) }, onEnviar = { _,_,_ -> })
+                    }
                 }
             }
         }

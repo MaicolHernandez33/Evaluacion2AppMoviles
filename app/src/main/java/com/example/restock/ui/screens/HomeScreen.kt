@@ -21,61 +21,75 @@ fun HomeScreen(
     onGoToContacto: () -> Unit = {},
     onLogout: () -> Unit = {}
 ) {
+    val Orange = Color(0xFFD8572A)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFEAAC8B))
             .padding(24.dp),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(Modifier.height(16.dp))
+
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.logo1),
             contentDescription = "Logotipo",
             modifier = Modifier
-                .height(200.dp)
-                .padding(bottom = 32.dp)
+                .height(180.dp)
+                .padding(bottom = 16.dp)
         )
+
         Text("¡Bienvenido a Restock!")
 
         Spacer(Modifier.height(16.dp))
+
+        // Botones principales (todos mismo color)
         Button(
             onClick = onGoToCatalogo,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFDE7651),
+                containerColor = Orange,
                 contentColor = Color.White
             ),
             modifier = Modifier.fillMaxWidth()
         ) { Text("Catálogo") }
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(10.dp))
+
         Button(
             onClick = onGoToNosotros,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFD8572A),
+                containerColor = Orange,
                 contentColor = Color.White
             ),
             modifier = Modifier.fillMaxWidth()
         ) { Text("Nosotros") }
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(10.dp))
+
         Button(
             onClick = onGoToContacto,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFDE7651),
+                containerColor = Orange,
                 contentColor = Color.White
             ),
             modifier = Modifier.fillMaxWidth()
         ) { Text("Contacto") }
 
-        Spacer(Modifier.height(24.dp))
+        // Empuja el botón de logout hacia abajo
+        Spacer(modifier = Modifier.weight(1f))
+
+        // Cerrar sesión más pequeño y al fondo
         Button(
             onClick = onLogout,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFD8572A),
+                containerColor = Orange,
                 contentColor = Color.White
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth(0.7f) // más angosto
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 12.dp)
         ) { Text("Cerrar sesión") }
     }
 }

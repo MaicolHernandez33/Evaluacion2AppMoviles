@@ -13,22 +13,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.restock.R
-import com.example.restock.ui.theme.RestockTheme
 
 @Composable
 fun RegisterScreen(
-    onRegistered: () -> Unit = {},
-    onGoToLogin: () -> Unit = {}
+    onRegistered: () -> Unit = {},                       // opcional
+    onGoToLogin: () -> Unit = {},
+    onSubmitRegister: (String, String, String) -> Unit = { _, _, _ -> }, // <-- NUEVO
+    snack: String? = null                                                // <-- NUEVO
 ) {
     var nombre by remember { mutableStateOf("") }
     var correo by remember { mutableStateOf("") }
     var clave by remember { mutableStateOf("") }
     var confirmClave by remember { mutableStateOf("") }
-    var mensaje by remember { mutableStateOf("") }
+    var mensajeLocal by remember { mutableStateOf("") }
+
+    val Orange = Color(0xFFD8572A)
+
+    fun validar(): String? {
+        if (nombre.isBlank()) return "El campo Nombre Completo es obligatorio."
+        if (correo.isBlank()) return "El campo Correo Electrónico es obligatorio."
+        if (clave.isBlank()) return "El campo Contraseña es obligatorio."
+        if (confirmClave.isBlank()) return "El campo Confirmar Contraseña es obligatorio."
+        if (clave.length < 6) return "La contraseña debe tener al menos 6 caracteres."
+        if (clave != confirmClave) return "Las contraseñas no coinciden."
+        return null
+    }
 
     Column(
         modifier = Modifier
@@ -86,48 +98,44 @@ fun RegisterScreen(
 
         Button(
             onClick = {
-                mensaje = when {
-                    nombre.isEmpty()       -> "El campo Nombre Completo es obligatorio."
-                    correo.isEmpty()       -> "El campo Correo Electrónico es obligatorio."
-                    clave.isEmpty()        -> "El campo Contraseña es obligatorio."
-                    confirmClave.isEmpty() -> "El campo Confirmar Contraseña es obligatorio."
-                    clave != confirmClave  -> "Las contraseñas no coinciden."
-                    else -> {
-                        onRegistered()
-                        "Registro exitoso: \nNombre: $nombre\nCorreo: $correo\n"
-                    }
+                validar()?.let { mensajeLocal = it } ?: run {
+                    onSubmitRegister(nombre.trim(), correo.trim(), clave.trim())
+                    mensajeLocal = ""
                 }
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFD8572A),
-                contentColor   = Color(0xFFFFFFFF)
-            )
+                containerColor = Orange,
+                contentColor   = Color.White
+            ),
+            modifier = Modifier.fillMaxWidth()
         ) { Text("Registrar") }
 
-        Spacer(Modifier.height(5.dp))
+        Spacer(Modifier.height(8.dp))
 
         Button(
-            onClick = { onGoToLogin() },
+            onClick = onGoToLogin,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xB0DE7651),
-                contentColor   = Color(0xFFFFFFFF)
-            )
+                containerColor = Orange,
+                contentColor   = Color.White
+            ),
+            modifier = Modifier.fillMaxWidth()
         ) { Text("Iniciar Sesión") }
 
-        if (mensaje.isNotEmpty()) {
+        if (mensajeLocal.isNotEmpty()) {
             Spacer(Modifier.height(12.dp))
             Text(
-                text = mensaje,
-                fontSize = 18.sp,
-                color = if (mensaje.contains("Registro exitoso"))
-                    Color(0xFF2E7D32) else Color(0xFFc62828)
+                text = mensajeLocal,
+                fontSize = 16.sp,
+                color = Color(0xFFC62828)
+            )
+        }
+        if (!snack.isNullOrBlank()) {
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = snack,
+                fontSize = 16.sp,
+                color = if (snack.contains("exitoso", true)) Color(0xFF2E7D32) else Color(0xFFC62828)
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewRegisterScreen() {
-    RestockTheme { RegisterScreen() }
 }
