@@ -42,6 +42,7 @@ La app permite explorar el menú, realizar pedidos y contactar al restaurante , 
 - **Registro** - Creación de nuevas cuentas
 - **Home** - Pantalla principal
 - **Catálogo** - Lista de productos
+- **Carrito** - Simulador de carrito
 - **Contacto** - Formulario de contacto
 - **Nosotros** - Información de la empresa
 
