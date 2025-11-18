@@ -2,7 +2,6 @@ package com.example.restock.ui.screens
 
 import android.util.Patterns
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -17,6 +16,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.restock.R
+import com.example.restock.ui.components.CommonBackground // ← NUEVO IMPORT
 import com.example.restock.ui.theme.*
 
 @Composable
@@ -27,9 +27,8 @@ fun LoginScreen(
     snack: String? = null
 ) {
     var correo by remember { mutableStateOf("") }
-    var clave  by remember { mutableStateOf("") }
+    var clave by remember { mutableStateOf("") }
     var mensajeLocal by remember { mutableStateOf("") }
-
 
     fun validar(): String? {
         val mail = correo.trim()
@@ -41,16 +40,11 @@ fun LoginScreen(
         return null
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(fondo)
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
+    // Usar CommonBackground en lugar del Column original
+    CommonBackground {
+        // TODO tu contenido original PERO SIN el Column de afuera
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.logo1),
             contentDescription = "Logotipo",
             modifier = Modifier
                 .height(200.dp)
@@ -61,7 +55,8 @@ fun LoginScreen(
             value = correo,
             onValueChange = { correo = it },
             label = { Text("Correo Electrónico") },
-            singleLine = true
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth() // ← Agregué esto
         )
 
         Spacer(Modifier.height(20.dp))
@@ -71,7 +66,8 @@ fun LoginScreen(
             onValueChange = { clave = it },
             label = { Text("Contraseña") },
             singleLine = true,
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth() // ← Agregué esto
         )
 
         Spacer(Modifier.height(20.dp))
@@ -86,7 +82,7 @@ fun LoginScreen(
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = naranjo,
-                contentColor   = Color.White
+                contentColor = Color.White
             ),
             modifier = Modifier.fillMaxWidth()
         ) { Text("Iniciar Sesión") }
@@ -97,7 +93,7 @@ fun LoginScreen(
             onClick = onGoToRegister,
             colors = ButtonDefaults.buttonColors(
                 containerColor = naranjo,
-                contentColor   = Color.White
+                contentColor = Color.White
             ),
             modifier = Modifier.fillMaxWidth()
         ) { Text("Registrarse") }

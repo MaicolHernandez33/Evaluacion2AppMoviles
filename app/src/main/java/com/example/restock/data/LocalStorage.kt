@@ -62,7 +62,7 @@ object LocalStorage {
         return p[KEY_NAME]
     }
 
-    /** Indica si hay sesión activa (útil para un SplashScreen) */
+    /** Indica si hay sesión activa */
     suspend fun isLogged(ctx: Context): Boolean {
         val p = ctx.dataStore.data.first()
         return p[KEY_LOGGED] ?: false
