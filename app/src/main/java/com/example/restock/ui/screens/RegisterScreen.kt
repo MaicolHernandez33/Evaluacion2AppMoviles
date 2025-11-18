@@ -1,7 +1,7 @@
 package com.example.restock.ui.screens
 
+import android.util.Patterns
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -16,14 +16,15 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.restock.R
+import com.example.restock.ui.components.CommonBackground // ← NUEVO IMPORT
 import com.example.restock.ui.theme.*
 
 @Composable
 fun RegisterScreen(
-    onRegistered: () -> Unit = {},                       // opcional
+    onRegistered: () -> Unit = {},
     onGoToLogin: () -> Unit = {},
-    onSubmitRegister: (String, String, String) -> Unit = { _, _, _ -> }, // <-- NUEVO
-    snack: String? = null                                                // <-- NUEVO
+    onSubmitRegister: (String, String, String) -> Unit = { _, _, _ -> },
+    snack: String? = null
 ) {
     var nombre by remember { mutableStateOf("") }
     var correo by remember { mutableStateOf("") }
@@ -34,6 +35,7 @@ fun RegisterScreen(
     fun validar(): String? {
         if (nombre.isBlank()) return "El campo Nombre Completo es obligatorio."
         if (correo.isBlank()) return "El campo Correo Electrónico es obligatorio."
+        if (!Patterns.EMAIL_ADDRESS.matcher(correo.trim()).matches()) return "Correo electrónico inválido."
         if (clave.isBlank()) return "El campo Contraseña es obligatorio."
         if (confirmClave.isBlank()) return "El campo Confirmar Contraseña es obligatorio."
         if (clave.length < 6) return "La contraseña debe tener al menos 6 caracteres."
@@ -41,16 +43,10 @@ fun RegisterScreen(
         return null
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(fondo)
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
+
+    CommonBackground {
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.logo1),
             contentDescription = "Logotipo",
             modifier = Modifier
                 .height(200.dp)
@@ -61,7 +57,8 @@ fun RegisterScreen(
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre Completo") },
-            singleLine = true
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth() // ← Agregado
         )
 
         Spacer(Modifier.height(20.dp))
@@ -70,7 +67,8 @@ fun RegisterScreen(
             value = correo,
             onValueChange = { correo = it },
             label = { Text("Correo Electrónico") },
-            singleLine = true
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth() // ← Agregado
         )
 
         Spacer(Modifier.height(20.dp))
@@ -80,7 +78,8 @@ fun RegisterScreen(
             onValueChange = { clave = it },
             label = { Text("Contraseña") },
             singleLine = true,
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth() // ← Agregado
         )
 
         Spacer(Modifier.height(20.dp))
@@ -90,7 +89,8 @@ fun RegisterScreen(
             onValueChange = { confirmClave = it },
             label = { Text("Confirmar Contraseña") },
             singleLine = true,
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth() // ← Agregado
         )
 
         Spacer(Modifier.height(20.dp))

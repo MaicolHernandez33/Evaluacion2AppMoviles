@@ -1,7 +1,6 @@
 package com.example.restock.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -11,8 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.restock.R
+import com.example.restock.ui.components.CommonBackground
 import com.example.restock.ui.theme.*
 
 @Composable
@@ -20,76 +22,99 @@ fun HomeScreen(
     onGoToCatalogo: () -> Unit = {},
     onGoToNosotros: () -> Unit = {},
     onGoToContacto: () -> Unit = {},
+    onGoToProfile: () -> Unit = {},
     onLogout: () -> Unit = {}
 ) {
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(fondo)
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(Modifier.height(16.dp))
-
-        Image(
-            painter = painterResource(id = R.drawable.logo1),
-            contentDescription = "Logotipo",
+    CommonBackground {
+        Column(
             modifier = Modifier
-                .height(180.dp)
-                .padding(bottom = 16.dp)
-        )
+                .fillMaxSize()
+                .padding(horizontal = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.logo1),
+                contentDescription = "Logotipo",
+                modifier = Modifier
+                    .height(180.dp)
+                    .padding(bottom = 32.dp)
+            )
 
-        Text("¡Bienvenido a Restock!")
+            Text(
+                text = "¡Bienvenido a Restock!",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 32.dp)
+            )
 
-        Spacer(Modifier.height(16.dp))
+            // Botones principales
+            Button(
+                onClick = onGoToCatalogo,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = naranjo,
+                    contentColor = Color.White
+                ),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Catálogo")
+            }
 
-        // Botones principales (todos mismo color)
-        Button(
-            onClick = onGoToCatalogo,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = naranjo,
-                contentColor = Color.White
-            ),
-            modifier = Modifier.fillMaxWidth()
-        ) { Text("Catálogo") }
+            Spacer(Modifier.height(16.dp))
 
-        Spacer(Modifier.height(10.dp))
+            Button(
+                onClick = onGoToNosotros,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = naranjo,
+                    contentColor = Color.White
+                ),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Nosotros")
+            }
 
-        Button(
-            onClick = onGoToNosotros,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = naranjo,
-                contentColor = Color.White
-            ),
-            modifier = Modifier.fillMaxWidth()
-        ) { Text("Nosotros") }
+            Spacer(Modifier.height(16.dp))
 
-        Spacer(Modifier.height(10.dp))
+            Button(
+                onClick = onGoToContacto,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = naranjo,
+                    contentColor = Color.White
+                ),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Contacto")
+            }
 
-        Button(
-            onClick = onGoToContacto,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = naranjo,
-                contentColor = Color.White
-            ),
-            modifier = Modifier.fillMaxWidth()
-        ) { Text("Contacto") }
+            Spacer(Modifier.height(16.dp))
 
-        // Empuja el botón de logout hacia abajo
-        Spacer(modifier = Modifier.weight(1f))
+            // PERFIL
+            Button(
+                onClick = onGoToProfile,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = naranjo,
+                    contentColor = Color.White
+                ),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Mi Perfil")
+            }
 
-        // Cerrar sesión más pequeño y al fondo
-        Button(
-            onClick = onLogout,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = naranjo,
-                contentColor = Color.White
-            ),
-            modifier = Modifier
-                .fillMaxWidth(0.7f) // más angosto
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 12.dp)
-        ) { Text("Cerrar sesión") }
+            Spacer(Modifier.height(32.dp))
+
+            // Botón de cerrar sesión
+            Button(
+                onClick = onLogout,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = naranjo,
+                    contentColor = Color.White
+                ),
+                modifier = Modifier
+                    .fillMaxWidth(0.7f)
+            ) {
+                Text("Cerrar sesión")
+            }
+        }
     }
 }

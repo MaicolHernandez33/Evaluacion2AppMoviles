@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 // Rutas/pantallas simples
-enum class Screen { LOGIN, REGISTER, HOME, CATALOGO, NOSOTROS, CONTACTO, CARRITO }
+enum class Screen { LOGIN, REGISTER, HOME, CATALOGO, NOSOTROS, CONTACTO, CARRITO, PERFIL }
 
 data class UiState(
     val screen: Screen = Screen.LOGIN,
