@@ -23,6 +23,7 @@ fun HomeScreen(
     onGoToNosotros: () -> Unit = {},
     onGoToContacto: () -> Unit = {},
     onGoToProfile: () -> Unit = {},
+    onGoToQrScreen: () -> Unit = {},
     onLogout: () -> Unit = {}
 ) {
     CommonBackground {
@@ -99,6 +100,20 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Mi Perfil")
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            // QR
+            Button(
+                onClick = onGoToQrScreen,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = naranjo,
+                    contentColor = Color.White
+                ),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Escanear código en restaurante")
             }
 
             Spacer(Modifier.height(32.dp))
