@@ -4,13 +4,14 @@ import android.app.Application
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.restock.data.BaseDatosHelper
 import com.example.restock.data.LocalStorage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 // Rutas/pantallas simples
-enum class Screen { LOGIN, REGISTER, HOME, CATALOGO, NOSOTROS, CONTACTO, CARRITO, PERFIL, QRSCANNER }
+enum class Screen { LOGIN, REGISTER, HOME, CATALOGO, NOSOTROS, CONTACTO, CARRITO, PERFIL, QRSCANNER, CRUDUSUARIOS  }
 
 data class UiState(
     val screen: Screen = Screen.LOGIN,
@@ -45,12 +46,35 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun login(email: String, pass: String) {
         viewModelScope.launch {
             _ui.value = _ui.value.copy(isLoading = true, message = null)
+
+            val db = BaseDatosHelper(appCtx)
+            val usuarioDb = db.listar().find { it.correo == email.trim() && it.password == pass.trim() }
+
+            if (usuarioDb != null) {
+                _ui.value = _ui.value.copy(
+                    isLoading = false,
+                    screen = Screen.HOME,
+                    userName = usuarioDb.nombre,
+                    message = "Inicio de sesión correcto (SQLite)."
+                )
+                return@launch
+            }
+
+            // Revisar LocalStorage como respaldo
             val ok = LocalStorage.checkLogin(appCtx, email.trim(), pass.trim())
-            _ui.value = if (ok) {
+            if (ok) {
                 val name = LocalStorage.getUserName(appCtx)
-                _ui.value.copy(isLoading = false, screen = Screen.HOME, userName = name, message = "Inicio de sesión correcto.")
+                _ui.value = _ui.value.copy(
+                    isLoading = false,
+                    screen = Screen.HOME,
+                    userName = name,
+                    message = "Inicio de sesión correcto (LocalStorage)."
+                )
             } else {
-                _ui.value.copy(isLoading = false, message = "Correo o contraseña incorrectos.")
+                _ui.value = _ui.value.copy(
+                    isLoading = false,
+                    message = "Correo o contraseña incorrectos."
+                )
             }
         }
     }

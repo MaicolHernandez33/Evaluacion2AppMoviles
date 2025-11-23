@@ -1,0 +1,269 @@
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    alias(libs.plugins.android.application)\r\n    alias(libs.plugins.kotlin.android)\r\n    alias(libs.plugins.kotlin.compose)\r\n}\r\n\r\nandroid {\r\n    namespace = \"com.example.restock\"\r\n    compileSdk = 36\r\n\r\n    defaultConfig {\r\n        applicationId = \"com.example.restock\"\r\n        minSdk = 25\r\n        targetSdk = 36\r\n        versionCode = 1\r\n        versionName = \"1.0\"\r\n\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = false\r\n            proguardFiles(\r\n                getDefaultProguardFile(\"proguard-android-optimize.txt\"),\r\n                \"proguard-rules.pro\"\r\n            )\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_11\r\n        targetCompatibility = JavaVersion.VERSION_11\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = \"11\"\r\n    }\r\n    buildFeatures {\r\n        compose = true\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation(libs.androidx.core.ktx)\r\n    implementation(libs.androidx.lifecycle.runtime.ktx)\r\n    implementation(libs.androidx.activity.compose)\r\n    implementation(platform(libs.androidx.compose.bom))\r\n    implementation(libs.androidx.ui)\r\n    implementation(libs.androidx.ui.graphics)\r\n    implementation(libs.androidx.ui.tooling.preview)\r\n    implementation(libs.androidx.material3)\r\n    implementation(\"androidx.datastore:datastore-preferences:1.1.1\")\r\n    implementation(\"androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6\")\r\n    implementation(\"androidx.compose.material:material-icons-extended\")\r\n\r\n    testImplementation(libs.junit)\r\n    androidTestImplementation(libs.androidx.junit)\r\n    androidTestImplementation(libs.androidx.espresso.core)\r\n    androidTestImplementation(platform(libs.androidx.compose.bom))\r\n    androidTestImplementation(libs.androidx.ui.test.junit4)\r\n    debugImplementation(libs.androidx.ui.tooling)\r\n    debugImplementation(libs.androidx.ui.test.manifest)\r\n\r\n    implementation (\"androidx.compose.ui:ui:1.2.1\")\r\n    implementation (\"androidx.compose.material:material:1.2.1\")\r\n    implementation (\"androidx.compose.ui:ui-tooling-preview:1.2.1\")\r\n    debugImplementation (\"androidx.compose.ui:ui-tooling:1.2.1\")\r\n\r\n    implementation (\"androidx.core:core-ktx:1.9.0\")\r\n    implementation (\"androidx.activity:activity-compose:1.6.0\")\r\n\r\n    implementation (\"com.google.accompanist:accompanist-systemuicontroller:0.24.10-beta\")\r\n\r\n    implementation (\"androidx.camera:camera-core:1.2.0-beta02\")\r\n    implementation (\"androidx.camera:camera-camera2:1.2.0-beta02\")\r\n    implementation (\"androidx.camera:camera-lifecycle:1.2.0-beta02\")\r\n    implementation (\"androidx.camera:camera-view:1.2.0-beta02\")\r\n\r\n    implementation (\"com.google.zxing:core:3.3.3\")\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision 0271ae0c6b93ad2258997d93c049e46cc5ca111a)
++++ b/app/build.gradle.kts	(date 1763750622576)
+@@ -69,6 +69,11 @@
+     implementation ("androidx.core:core-ktx:1.9.0")
+     implementation ("androidx.activity:activity-compose:1.6.0")
+ 
++    // DEPENDENCIAS DE TESTING
++    testImplementation("androidx.arch.core:core-testing:2.2.0")
++    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
++    testImplementation("io.mockk:mockk:1.13.8")
++
+     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.24.10-beta")
+ 
+     implementation ("androidx.camera:camera-core:1.2.0-beta02")
+Index: .idea/codeStyles/codeStyleConfig.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/codeStyles/codeStyleConfig.xml b/.idea/codeStyles/codeStyleConfig.xml
+new file mode 100644
+--- /dev/null	(date 1763748342512)
++++ b/.idea/codeStyles/codeStyleConfig.xml	(date 1763748342512)
+@@ -0,0 +1,5 @@
++<component name="ProjectCodeStyleConfiguration">
++  <state>
++    <option name="USE_PER_PROJECT_SETTINGS" value="true" />
++  </state>
++</component>
+\ No newline at end of file
+Index: .idea/codeStyles/Project.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/codeStyles/Project.xml b/.idea/codeStyles/Project.xml
+new file mode 100644
+--- /dev/null	(date 1763748342510)
++++ b/.idea/codeStyles/Project.xml	(date 1763748342510)
+@@ -0,0 +1,123 @@
++<component name="ProjectCodeStyleConfiguration">
++  <code_scheme name="Project" version="173">
++    <JetCodeStyleSettings>
++      <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
++    </JetCodeStyleSettings>
++    <codeStyleSettings language="XML">
++      <option name="FORCE_REARRANGE_MODE" value="1" />
++      <indentOptions>
++        <option name="CONTINUATION_INDENT_SIZE" value="4" />
++      </indentOptions>
++      <arrangement>
++        <rules>
++          <section>
++            <rule>
++              <match>
++                <AND>
++                  <NAME>xmlns:android</NAME>
++                  <XML_ATTRIBUTE />
++                  <XML_NAMESPACE>^$</XML_NAMESPACE>
++                </AND>
++              </match>
++            </rule>
++          </section>
++          <section>
++            <rule>
++              <match>
++                <AND>
++                  <NAME>xmlns:.*</NAME>
++                  <XML_ATTRIBUTE />
++                  <XML_NAMESPACE>^$</XML_NAMESPACE>
++                </AND>
++              </match>
++              <order>BY_NAME</order>
++            </rule>
++          </section>
++          <section>
++            <rule>
++              <match>
++                <AND>
++                  <NAME>.*:id</NAME>
++                  <XML_ATTRIBUTE />
++                  <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
++                </AND>
++              </match>
++            </rule>
++          </section>
++          <section>
++            <rule>
++              <match>
++                <AND>
++                  <NAME>.*:name</NAME>
++                  <XML_ATTRIBUTE />
++                  <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
++                </AND>
++              </match>
++            </rule>
++          </section>
++          <section>
++            <rule>
++              <match>
++                <AND>
++                  <NAME>name</NAME>
++                  <XML_ATTRIBUTE />
++                  <XML_NAMESPACE>^$</XML_NAMESPACE>
++                </AND>
++              </match>
++            </rule>
++          </section>
++          <section>
++            <rule>
++              <match>
++                <AND>
++                  <NAME>style</NAME>
++                  <XML_ATTRIBUTE />
++                  <XML_NAMESPACE>^$</XML_NAMESPACE>
++                </AND>
++              </match>
++            </rule>
++          </section>
++          <section>
++            <rule>
++              <match>
++                <AND>
++                  <NAME>.*</NAME>
++                  <XML_ATTRIBUTE />
++                  <XML_NAMESPACE>^$</XML_NAMESPACE>
++                </AND>
++              </match>
++              <order>BY_NAME</order>
++            </rule>
++          </section>
++          <section>
++            <rule>
++              <match>
++                <AND>
++                  <NAME>.*</NAME>
++                  <XML_ATTRIBUTE />
++                  <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>
++                </AND>
++              </match>
++              <order>ANDROID_ATTRIBUTE_ORDER</order>
++            </rule>
++          </section>
++          <section>
++            <rule>
++              <match>
++                <AND>
++                  <NAME>.*</NAME>
++                  <XML_ATTRIBUTE />
++                  <XML_NAMESPACE>.*</XML_NAMESPACE>
++                </AND>
++              </match>
++              <order>BY_NAME</order>
++            </rule>
++          </section>
++        </rules>
++      </arrangement>
++    </codeStyleSettings>
++    <codeStyleSettings language="kotlin">
++      <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
++    </codeStyleSettings>
++  </code_scheme>
++</component>
+\ No newline at end of file
+Index: .idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+new file mode 100644
+--- /dev/null	(date 1763750710609)
++++ b/.idea/inspectionProfiles/Project_Default.xml	(date 1763750710609)
+@@ -0,0 +1,61 @@
++<component name="InspectionProjectProfileManager">
++  <profile version="1.0">
++    <option name="myName" value="Project Default" />
++    <inspection_tool class="ComposePreviewDimensionRespectsLimit" enabled="true" level="WARNING" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++      <option name="previewFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="ComposePreviewMustBeTopLevelFunction" enabled="true" level="ERROR" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++      <option name="previewFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="ComposePreviewNeedsComposableAnnotation" enabled="true" level="ERROR" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++      <option name="previewFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="ComposePreviewNotSupportedInUnitTestFiles" enabled="true" level="ERROR" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++      <option name="previewFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="GlancePreviewDimensionRespectsLimit" enabled="true" level="WARNING" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="GlancePreviewMustBeTopLevelFunction" enabled="true" level="ERROR" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="GlancePreviewNeedsComposableAnnotation" enabled="true" level="ERROR" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="GlancePreviewNotSupportedInUnitTestFiles" enabled="true" level="ERROR" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="PreviewAnnotationInFunctionWithParameters" enabled="true" level="ERROR" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++      <option name="previewFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="PreviewApiLevelMustBeValid" enabled="true" level="ERROR" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++      <option name="previewFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="PreviewDeviceShouldUseNewSpec" enabled="true" level="WEAK WARNING" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++      <option name="previewFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="PreviewFontScaleMustBeGreaterThanZero" enabled="true" level="ERROR" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++      <option name="previewFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="PreviewMultipleParameterProviders" enabled="true" level="ERROR" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++      <option name="previewFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="PreviewParameterProviderOnFirstParameter" enabled="true" level="ERROR" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++      <option name="previewFile" value="true" />
++    </inspection_tool>
++    <inspection_tool class="PreviewPickerAnnotation" enabled="true" level="ERROR" enabled_by_default="true">
++      <option name="composableFile" value="true" />
++      <option name="previewFile" value="true" />
++    </inspection_tool>
++  </profile>
++</component>
+\ No newline at end of file
+Index: .idea/deploymentTargetSelector.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"deploymentTargetSelector\">\r\n    <selectionStates>\r\n      <SelectionState runConfigName=\"app\">\r\n        <option name=\"selectionMode\" value=\"DROPDOWN\" />\r\n      </SelectionState>\r\n    </selectionStates>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetSelector.xml b/.idea/deploymentTargetSelector.xml
+--- a/.idea/deploymentTargetSelector.xml	(revision 0271ae0c6b93ad2258997d93c049e46cc5ca111a)
++++ b/.idea/deploymentTargetSelector.xml	(date 1763749488475)
+@@ -4,6 +4,14 @@
+     <selectionStates>
+       <SelectionState runConfigName="app">
+         <option name="selectionMode" value="DROPDOWN" />
++        <DropdownSelection timestamp="2025-11-21T18:08:59.456902500Z">
++          <Target type="DEFAULT_BOOT">
++            <handle>
++              <DeviceId pluginId="PhysicalDevice" identifier="serial=4dmrqkfaxk95s8eu" />
++            </handle>
++          </Target>
++        </DropdownSelection>
++        <DialogSelection />
+       </SelectionState>
+     </selectionStates>
+   </component>
