@@ -11,10 +11,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -129,13 +129,13 @@ fun QrScannerScreen(
                 }
 
                 Box(Modifier.background(Color.White)){
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = urlText,
-                    onValueChange = {},
-                    label = { Text("URL detectada") },
-                    readOnly = true,
-                )}
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = urlText,
+                        onValueChange = {},
+                        label = { Text("URL detectada") },
+                        readOnly = true,
+                    )}
 
                 Spacer(Modifier.height(5.dp))
 
@@ -151,8 +151,8 @@ fun QrScannerScreen(
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 30.sp)
                 }
-                }
             }
+        }
     }
 
     PermisoCamara(
@@ -168,15 +168,3 @@ fun QrScannerScreen(
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
