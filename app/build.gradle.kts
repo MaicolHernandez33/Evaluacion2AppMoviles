@@ -83,6 +83,10 @@ dependencies {
     // SYSTEM UI CONTROLLER
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.24.10-beta")
 
+    // RETROFIT – (lo usas para la API del clima)
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
     // TESTS
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
