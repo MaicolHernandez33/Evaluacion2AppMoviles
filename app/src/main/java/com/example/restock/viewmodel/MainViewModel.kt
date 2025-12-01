@@ -6,9 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.restock.data.BaseDatosHelper
 import com.example.restock.data.LocalStorage
+import com.example.restock.model.Producto
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 // Rutas/pantallas simples
 enum class Screen { LOGIN, REGISTER, HOME, CATALOGO, NOSOTROS, CONTACTO, CARRITO, PERFIL, QRSCANNER, CRUDUSUARIOS  }
@@ -21,7 +24,35 @@ data class UiState(
 )
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
-    val carrito = mutableStateListOf<Pair<Int, String>>()
+
+    //para microservicio productos
+    private val _productos = MutableStateFlow<List<Producto>>(emptyList())
+    val productos: StateFlow<List<Producto>> = _productos
+
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("https://productservice-ly24.onrender.com/") // el / al final es necesario para RetroFit
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    private val api = retrofit.create(ApiService::class.java)
+
+    init {
+        cargarProductos()
+    }
+
+    fun cargarProductos() {
+        viewModelScope.launch {
+            try {
+                val resultado = api.getProductos()
+                _productos.value = resultado
+            } catch (e: Exception) {
+                _productos.value = listOf(Producto(0L, "Error: ${e.message}", 0.0,""))
+            }
+        }
+    }
+
+
+    val carrito = mutableStateListOf<Producto>()
     private val _ui = MutableStateFlow(UiState())
     val ui: StateFlow<UiState> = _ui
 
