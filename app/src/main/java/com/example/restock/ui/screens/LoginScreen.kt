@@ -3,10 +3,11 @@ package com.example.restock.ui.screens
 import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,8 +17,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.restock.R
-import com.example.restock.ui.components.CommonBackground // ← NUEVO IMPORT
-import com.example.restock.ui.theme.*
+import com.example.restock.ui.components.CommonBackground
+import com.example.restock.ui.theme.naranjo
 
 @Composable
 fun LoginScreen(
@@ -40,81 +41,138 @@ fun LoginScreen(
         return null
     }
 
-    // Usar CommonBackground en lugar del Column original
     CommonBackground {
-        // TODO tu contenido original PERO SIN el Column de afuera
-        Image(
-            painter = painterResource(id = R.drawable.logo1),
-            contentDescription = "Logotipo",
+
+        Column(
             modifier = Modifier
-                .height(200.dp)
-                .padding(bottom = 32.dp)
-        )
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
 
-        TextField(
-            value = correo,
-            onValueChange = { correo = it },
-            label = { Text("Correo Electrónico") },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth() // ← Agregué esto
-        )
+            // LOGO
+            Image(
+                painter = painterResource(id = R.drawable.logo1),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .size(160.dp)
+                    .padding(bottom = 24.dp)
+            )
 
-        Spacer(Modifier.height(20.dp))
+            // TARJETA
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.8f)
+                ),
+                shape = RoundedCornerShape(18.dp),
+                elevation = CardDefaults.cardElevation(6.dp)
+            ) {
 
-        TextField(
-            value = clave,
-            onValueChange = { clave = it },
-            label = { Text("Contraseña") },
-            singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth() // ← Agregué esto
-        )
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
 
-        Spacer(Modifier.height(20.dp))
+                    // CAMPO EMAIL
+                    OutlinedTextField(
+                        value = correo,
+                        onValueChange = { correo = it },
+                        label = { Text("Correo Electrónico") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Email,
+                                contentDescription = "email",
+                                tint = naranjo
+                            )
+                        },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    )
 
-        Button(
-            onClick = {
-                validar()?.let { mensajeLocal = it } ?: run {
-                    // Delegamos la lógica al ViewModel
-                    onSubmitLogin(correo.trim(), clave.trim())
-                    mensajeLocal = "" // limpiamos mensaje local
+                    Spacer(Modifier.height(16.dp))
+
+                    // CAMPO CONTRASEÑA
+                    OutlinedTextField(
+                        value = clave,
+                        onValueChange = { clave = it },
+                        label = { Text("Contraseña") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Lock,
+                                contentDescription = "password",
+                                tint = naranjo
+                            )
+                        },
+                        singleLine = true,
+                        visualTransformation = PasswordVisualTransformation(),
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+
+                    Spacer(Modifier.height(20.dp))
+
+                    // BOTÓN INICIAR SESIÓN
+                    Button(
+                        onClick = {
+                            validar()?.let { mensajeLocal = it } ?: run {
+                                onSubmitLogin(correo.trim(), clave.trim())
+                                mensajeLocal = ""
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = naranjo,
+                            contentColor = Color.White
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp),
+                        shape = RoundedCornerShape(30.dp)
+                    ) {
+                        Text("Iniciar Sesión", fontSize = 16.sp)
+                    }
+
+                    Spacer(Modifier.height(12.dp))
+
+                    // BOTÓN REGISTRARSE
+                    OutlinedButton(
+                        onClick = onGoToRegister,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp),
+                        shape = RoundedCornerShape(30.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = naranjo
+                        )
+                    ) {
+                        Text("Registrarse", fontSize = 16.sp)
+                    }
                 }
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = naranjo,
-                contentColor = Color.White
-            ),
-            modifier = Modifier.fillMaxWidth()
-        ) { Text("Iniciar Sesión") }
+            }
 
-        Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(16.dp))
 
-        Button(
-            onClick = onGoToRegister,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = naranjo,
-                contentColor = Color.White
-            ),
-            modifier = Modifier.fillMaxWidth()
-        ) { Text("Registrarse") }
+            // MENSAJE LOCAL
+            if (mensajeLocal.isNotEmpty()) {
+                Text(
+                    text = mensajeLocal,
+                    fontSize = 16.sp,
+                    color = Color(0xFFD32F2F)
+                )
+            }
 
-        // Mensaje local de validación
-        if (mensajeLocal.isNotEmpty()) {
-            Spacer(Modifier.height(12.dp))
-            Text(
-                text = mensajeLocal,
-                fontSize = 16.sp,
-                color = Color(0xFFC62828)
-            )
-        }
-        // Mensaje que venga del ViewModel (snack)
-        if (!snack.isNullOrBlank()) {
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = snack,
-                fontSize = 16.sp,
-                color = if (snack.contains("correcto", true)) Color(0xFF2E7D32) else Color(0xFFC62828)
-            )
+            // SNACK DEL VIEWMODEL
+            if (!snack.isNullOrBlank()) {
+                Text(
+                    text = snack,
+                    fontSize = 16.sp,
+                    color = if (snack.contains("correcto", true))
+                        Color(0xFF2E7D32)
+                    else Color(0xFFD32F2F)
+                )
+            }
         }
     }
 }

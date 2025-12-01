@@ -14,7 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 // Rutas/pantallas simples
-enum class Screen { LOGIN, REGISTER, HOME, CATALOGO, NOSOTROS, CONTACTO, CARRITO, PERFIL, QRSCANNER, CRUDUSUARIOS  }
+enum class Screen { LOGIN, REGISTER, HOME, CATALOGO, NOSOTROS, CONTACTO, CARRITO, PERFIL, QRSCANNER, CRUDUSUARIOS, CLIMA  }
 
 data class UiState(
     val screen: Screen = Screen.LOGIN,

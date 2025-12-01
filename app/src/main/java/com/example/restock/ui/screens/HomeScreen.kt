@@ -1,21 +1,24 @@
 package com.example.restock.ui.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
 import com.example.restock.R
+import androidx.compose.foundation.Image
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.res.painterResource
 import com.example.restock.ui.components.CommonBackground
-import com.example.restock.ui.theme.*
+import com.example.restock.ui.theme.naranjo
 
 @Composable
 fun HomeScreen(
@@ -25,125 +28,118 @@ fun HomeScreen(
     onGoToProfile: () -> Unit = {},
     onGoToQrScreen: () -> Unit = {},
     onGoToCRUDUsuarios: () -> Unit = {},
+    onGoToClima: () -> Unit = {},
     onLogout: () -> Unit = {}
 ) {
+
     CommonBackground {
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 32.dp),
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            // LOGO
+            Image(
+                painter = painterResource(id = R.drawable.logo1),
+                contentDescription = "Logo Restock",
+                modifier = Modifier
+                    .size(160.dp)
+                    .padding(top = 10.dp, bottom = 10.dp)
+            )
+
+            Surface(
+                color = Color.Black.copy(alpha = 0.45f),
+                shape = RoundedCornerShape(20.dp)
+            ) {
+                Text(
+                    "Bienvenido a Restock",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    modifier = Modifier.padding(horizontal = 18.dp, vertical = 8.dp)
+                )
+            }
+
+
+
+            Spacer(Modifier.height(25.dp))
+
+            // --- GRID DE BOTONES EN 2 COLUMNAS ---
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    HomeItem("Catálogo", Icons.Default.MenuBook, onGoToCatalogo)
+                    HomeItem("Nosotros", Icons.Default.Info, onGoToNosotros)
+                }
+
+                Spacer(Modifier.height(16.dp))
+
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    HomeItem("Contacto", Icons.Default.Phone, onGoToContacto)
+                    HomeItem("Mi Perfil", Icons.Default.Person, onGoToProfile)
+                }
+
+                Spacer(Modifier.height(16.dp))
+
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    HomeItem("Escanear", Icons.Default.QrCodeScanner, onGoToQrScreen)
+                    HomeItem("Clima", Icons.Default.Cloud, onGoToClima)
+                }
+
+                Spacer(Modifier.height(16.dp))
+
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    HomeItem("Usuarios", Icons.Default.Group, onGoToCRUDUsuarios)
+                    HomeItem("Salir", Icons.Default.ExitToApp, onLogout)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun HomeItem(texto: String, icono: androidx.compose.ui.graphics.vector.ImageVector, onClick: () -> Unit) {
+
+    Card(
+        modifier = Modifier
+            .width(150.dp)
+            .height(120.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.85f)
+        ),
+        elevation = CardDefaults.cardElevation(8.dp)
+    ) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.logo1),
-                contentDescription = "Logotipo",
-                modifier = Modifier
-                    .height(180.dp)
-                    .padding(bottom = 32.dp)
+
+            Icon(
+                imageVector = icono,
+                contentDescription = texto,
+                tint = Color.White,
+                modifier = Modifier.size(36.dp)
             )
+
+            Spacer(Modifier.height(8.dp))
 
             Text(
-                text = "¡Bienvenido a Restock!",
-                fontSize = 20.sp,
+                texto,
                 fontWeight = FontWeight.Bold,
-                color = Color.White,
-                modifier = Modifier.padding(bottom = 32.dp)
+                color = Color.White
             )
-
-            // Botones principales
-            Button(
-                onClick = onGoToCatalogo,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = naranjo,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Catálogo")
-            }
-
-            Spacer(Modifier.height(16.dp))
-
-            Button(
-                onClick = onGoToNosotros,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = naranjo,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Nosotros")
-            }
-
-            Spacer(Modifier.height(16.dp))
-
-            Button(
-                onClick = onGoToContacto,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = naranjo,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Contacto")
-            }
-
-            Spacer(Modifier.height(16.dp))
-
-            // PERFIL
-            Button(
-                onClick = onGoToProfile,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = naranjo,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Mi Perfil")
-            }
-
-            Spacer(Modifier.height(16.dp))
-
-            // QR
-            Button(
-                onClick = onGoToQrScreen,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = naranjo,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Escanear código en restaurante")
-            }
-
-            Spacer(Modifier.height(32.dp))
-
-            Button(
-                onClick = onGoToCRUDUsuarios,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = naranjo,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Administrar Usuarios")
-            }
-
-            Spacer(Modifier.height(32.dp))
-
-            // Botón de cerrar sesión
-            Button(
-                onClick = onLogout,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = naranjo,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier
-                    .fillMaxWidth(0.7f)
-            ) {
-                Text("Cerrar sesión")
-            }
         }
     }
 }

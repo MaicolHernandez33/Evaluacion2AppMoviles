@@ -23,7 +23,7 @@ fun CommonBackground(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        // Imagen de fondo con opacidad reducida - AJUSTA ESTE VALOR
+        // Imagen de fondo con opacidad reducida -
         Image(
             painter = painterResource(id = R.drawable.fondo_restaurante),
             contentDescription = "Fondo del restaurante Sabores del Puerto",

@@ -60,6 +60,7 @@ class MainActivity : ComponentActivity() {
                             onGoToProfile = { vm.goTo(Screen.PERFIL) },
                             onGoToQrScreen = { vm.goTo(Screen.QRSCANNER) },
                             onGoToCRUDUsuarios = { vm.goTo(Screen.CRUDUSUARIOS) },
+                            onGoToClima = { vm.goTo(Screen.CLIMA) },
                             onLogout = { vm.logout() }
                         )
 
@@ -92,7 +93,7 @@ class MainActivity : ComponentActivity() {
                             onBack = { vm.goTo(Screen.HOME) }
                         )
 
-                        // ⭐ CRUD USUARIOS (correcto!)
+                        // CRUD USUARIOS
                         Screen.CRUDUSUARIOS -> {
                             val vmUsuarios: VistaModeloUsuarios = viewModel(
                                 factory = VistaModeloUsuariosFactory(this@MainActivity)
@@ -117,6 +118,11 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
+
+                        // CLIMA
+                        Screen.CLIMA -> ClimaScreen(
+                            onBack = { vm.goTo(Screen.HOME) }
+                        )
                     }
                 }
             }
