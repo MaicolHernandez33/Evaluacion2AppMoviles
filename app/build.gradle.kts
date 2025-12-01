@@ -91,4 +91,12 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     testImplementation("androidx.arch.core:core-testing:2.2.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //coil for compose
+    implementation("io.coil-kt:coil-compose:2.0.0-rc01")
+
 }

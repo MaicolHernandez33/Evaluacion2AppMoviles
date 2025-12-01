@@ -12,12 +12,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
+import com.example.restock.model.Producto
 import com.example.restock.ui.components.CommonBackground
 import com.example.restock.ui.theme.*
 
 @Composable
 fun CarritoScreen(
-    carrito: MutableList<Pair<Int, String>>,
+    carrito: MutableList<Producto>,
     onBack: () -> Unit
 ) {
 
@@ -86,7 +88,7 @@ fun CarritoScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         items(carrito.size) { index ->
-                            val (imagen, nombre) = carrito[index]
+                            val (id,nombre, precio, urlImagen) = carrito[index]
                             Card(
                                 modifier = Modifier
                                     .padding(8.dp)
@@ -106,9 +108,14 @@ fun CarritoScreen(
                                         modifier = Modifier.weight(1f),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
+                                        Text(
+                                            id.toString(),
+                                            color = naranjo,
+
+                                            )
                                         Image(
-                                            painter = painterResource(imagen),
-                                            contentDescription = nombre,
+                                            painter = rememberAsyncImagePainter(urlImagen),
+                                            contentDescription = urlImagen,
                                             modifier = Modifier
                                                 .size(80.dp)
                                                 .padding(4.dp)
@@ -120,6 +127,14 @@ fun CarritoScreen(
                                             color = Color.White,
                                             modifier = Modifier.weight(1f)
                                         )
+                                        Spacer(Modifier.width(12.dp))
+                                        Text(
+                                            precio.toString(),
+                                            fontWeight = FontWeight.Bold,
+                                            color = Color.White,
+                                            modifier = Modifier.weight(1f) // ← Permite que el texto ocupe espacio
+                                        )
+
                                     }
 
                                     Spacer(Modifier.width(8.dp))
