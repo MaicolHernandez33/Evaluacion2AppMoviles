@@ -28,6 +28,7 @@ fun CatalogoScreen(
     val vm: MainViewModel = viewModel()
     val productos by vm.productos.collectAsState()
 
+    
     CommonBackground {
         Column(
             modifier = Modifier
@@ -133,6 +134,7 @@ fun CatalogoScreen(
                             Button(
                                 onClick = {
                                     carrito.add(productos[index])
+
                                 },
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color.White,

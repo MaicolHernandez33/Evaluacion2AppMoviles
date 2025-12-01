@@ -1,11 +1,13 @@
 package com.example.restock.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,9 +21,15 @@ import com.example.restock.ui.theme.*
 
 @Composable
 fun CarritoScreen(
-    carrito: MutableList<Producto>,
+    carrito: List<Producto>,
     onBack: () -> Unit
 ) {
+    val carritoState = remember { mutableStateListOf<Producto>().apply { addAll(carrito) } }
+    var total by remember { mutableDoubleStateOf(0.0) }
+
+    LaunchedEffect(carritoState.size) {
+        total = carritoState.sumOf { it.precio }
+    }
 
     CommonBackground {
         Column(
@@ -29,7 +37,6 @@ fun CarritoScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            // Header fijo en la parte superior
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -53,14 +60,12 @@ fun CarritoScreen(
                     color = Color.White
                 )
 
-                // Espacio para balancear (reemplaza el botón que estaba aquí)
                 Spacer(Modifier.width(80.dp))
             }
 
             Spacer(Modifier.height(16.dp))
 
-            if (carrito.isEmpty()) {
-                // Carrito vacío - centrado
+            if (carritoState.isEmpty()) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -74,7 +79,6 @@ fun CarritoScreen(
                     )
                 }
             } else {
-                // Lista de productos con botón fijo abajo
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -87,8 +91,8 @@ fun CarritoScreen(
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        items(carrito.size) { index ->
-                            val (id,nombre, precio, urlImagen) = carrito[index]
+                        items(carritoState.size) { index ->
+                            val item = carritoState[index]
                             Card(
                                 modifier = Modifier
                                     .padding(8.dp)
@@ -109,38 +113,36 @@ fun CarritoScreen(
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Text(
-                                            id.toString(),
+                                            item.id.toString(),
                                             color = naranjo,
-
-                                            )
+                                        )
                                         Image(
-                                            painter = rememberAsyncImagePainter(urlImagen),
-                                            contentDescription = urlImagen,
+                                            painter = rememberAsyncImagePainter(item.urlImagen),
+                                            contentDescription = item.urlImagen,
                                             modifier = Modifier
                                                 .size(80.dp)
                                                 .padding(4.dp)
                                         )
                                         Spacer(Modifier.width(12.dp))
                                         Text(
-                                            nombre,
+                                            item.nombre,
                                             fontWeight = FontWeight.Bold,
                                             color = Color.White,
                                             modifier = Modifier.weight(1f)
                                         )
                                         Spacer(Modifier.width(12.dp))
                                         Text(
-                                            precio.toString(),
+                                            item.precio.toString(),
                                             fontWeight = FontWeight.Bold,
                                             color = Color.White,
-                                            modifier = Modifier.weight(1f) // ← Permite que el texto ocupe espacio
+                                            modifier = Modifier.weight(1f)
                                         )
-
                                     }
 
                                     Spacer(Modifier.width(8.dp))
 
                                     Button(
-                                        onClick = { carrito.removeAt(index) },
+                                        onClick = { carritoState.removeAt(index) },
                                         colors = ButtonDefaults.buttonColors(
                                             containerColor = Color.White,
                                             contentColor = naranjo
@@ -155,9 +157,29 @@ fun CarritoScreen(
                         }
                     }
 
-                    // Botón "Vaciar carrito" fijo en la parte inferior
+                    Spacer(Modifier.width(8.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Total: $${"%.2f".format(total)}",
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color.White,
+                            fontSize = MaterialTheme.typography.headlineMedium.fontSize,
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .background(Color(0x33FFFFFF), RoundedCornerShape(12.dp))
+                                .padding(vertical = 12.dp, horizontal = 20.dp)
+                        )
+                    }
+
+
                     Button(
-                        onClick = { carrito.clear() },
+                        onClick = { carritoState.clear() },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = naranjo,
                             contentColor = Color.White

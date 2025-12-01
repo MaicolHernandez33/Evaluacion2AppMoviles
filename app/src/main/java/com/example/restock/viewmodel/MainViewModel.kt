@@ -50,6 +50,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             }
         }
     }
+
+
     val carrito = mutableStateListOf<Producto>()
     private val _ui = MutableStateFlow(UiState())
     val ui: StateFlow<UiState> = _ui
