@@ -12,24 +12,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.restock.R
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
+import com.example.restock.model.Producto
 import com.example.restock.ui.components.CommonBackground
 import com.example.restock.ui.theme.*
+import com.example.restock.viewmodel.MainViewModel
 
 @Composable
 fun CatalogoScreen(
     onBack: () -> Unit,
     onGoToCarrito: () -> Unit,
-    carrito: MutableList<Pair<Int, String>>
+    carrito: MutableList<Producto>
 ) {
-    val productos = listOf(
-        Pair(R.drawable.combo1, "Combo 1 - $10.500"),
-        Pair(R.drawable.combo2, "Combo 2 - $12.000"),
-        Pair(R.drawable.combo3, "Combo 3 - $15.000"),
-        Pair(R.drawable.combo4, "Combo 4 - $8.000"),
-        Pair(R.drawable.combo5, "Combo 5 - $9.500")
-    )
+    val vm: MainViewModel = viewModel()
+    val productos by vm.productos.collectAsState()
 
+    
     CommonBackground {
         Column(
             modifier = Modifier
@@ -80,7 +79,7 @@ fun CatalogoScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 items(productos.size) { index ->
-                    val (imagen, nombre) = productos[index]
+                    val (id,nombre, precio, urlImagen) = productos[index]
                     Card(
                         modifier = Modifier
                             .padding(8.dp)
@@ -100,9 +99,16 @@ fun CatalogoScreen(
                                 modifier = Modifier.weight(1f), // ← Toma el espacio disponible
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
+
+                                Text(
+                                    id.toString(),
+                                    color = naranjo,
+
+                                )
+
                                 Image(
-                                    painter = painterResource(imagen),
-                                    contentDescription = nombre,
+                                    painter = rememberAsyncImagePainter(urlImagen),
+                                    contentDescription = urlImagen,
                                     modifier = Modifier
                                         .size(80.dp)
                                         .padding(4.dp)
@@ -114,6 +120,13 @@ fun CatalogoScreen(
                                     color = Color.White,
                                     modifier = Modifier.weight(1f) // ← Permite que el texto ocupe espacio
                                 )
+                                Spacer(Modifier.width(12.dp))
+                                Text(
+                                    precio.toString(),
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White,
+                                    modifier = Modifier.weight(1f) // ← Permite que el texto ocupe espacio
+                                )
                             }
 
                             Spacer(Modifier.width(8.dp))
@@ -121,6 +134,7 @@ fun CatalogoScreen(
                             Button(
                                 onClick = {
                                     carrito.add(productos[index])
+
                                 },
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color.White,
