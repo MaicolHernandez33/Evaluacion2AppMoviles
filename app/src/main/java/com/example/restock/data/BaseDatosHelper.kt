@@ -6,13 +6,16 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.restock.model.UsuarioSQLite
 
+private const val DB_NAME = "usuarios.db"
+private const val DB_VERSION = 4   // ← SUBE LA VERSIÓN PARA ELIMINAR EL ERROR
+
 class BaseDatosHelper(context: Context)
-    : SQLiteOpenHelper(context, "usuarios.db", null, 1) {
+    : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(
             """
-            CREATE TABLE usuario (
+            CREATE TABLE IF NOT EXISTS usuario (
                 nombre TEXT,
                 correo TEXT PRIMARY KEY,
                 password TEXT
@@ -22,8 +25,13 @@ class BaseDatosHelper(context: Context)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldV: Int, newV: Int) {
-        db.execSQL("DROP TABLE IF EXISTS usuario")
-        onCreate(db)
+        // Aplicar cambios si hay nuevas versiones (por ahora no hacemos nada)
+        // IMPORTANTE: No borrar datos ni tablas.
+        if (oldV < 4) {
+            // Si más adelante agregas columnas, puedes hacerlo aquí
+            // Ejemplo:
+            // db.execSQL("ALTER TABLE usuario ADD COLUMN telefono TEXT DEFAULT ''")
+        }
     }
 
     fun insertar(nombre: String, correo: String, password: String) {

@@ -3,10 +3,12 @@ package com.example.restock.ui.screens
 import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,8 +18,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.restock.R
-import com.example.restock.ui.components.CommonBackground // ← NUEVO IMPORT
-import com.example.restock.ui.theme.*
+import com.example.restock.ui.components.CommonBackground
+import com.example.restock.ui.theme.naranjo
 
 @Composable
 fun RegisterScreen(
@@ -43,98 +45,168 @@ fun RegisterScreen(
         return null
     }
 
-
     CommonBackground {
-        Image(
-            painter = painterResource(id = R.drawable.logo1),
-            contentDescription = "Logotipo",
+
+        Column(
             modifier = Modifier
-                .height(200.dp)
-                .padding(bottom = 32.dp)
-        )
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
 
-        TextField(
-            value = nombre,
-            onValueChange = { nombre = it },
-            label = { Text("Nombre Completo") },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth() // ← Agregado
-        )
+            // LOGO
+            Image(
+                painter = painterResource(id = R.drawable.logo1),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .size(160.dp)
+                    .padding(bottom = 24.dp)
+            )
 
-        Spacer(Modifier.height(20.dp))
+            // TARJETA
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.8f)
+                ),
+                shape = RoundedCornerShape(18.dp),
+                elevation = CardDefaults.cardElevation(6.dp)
+            ) {
 
-        TextField(
-            value = correo,
-            onValueChange = { correo = it },
-            label = { Text("Correo Electrónico") },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth() // ← Agregado
-        )
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
 
-        Spacer(Modifier.height(20.dp))
+                    // NOMBRE
+                    OutlinedTextField(
+                        value = nombre,
+                        onValueChange = { nombre = it },
+                        label = { Text("Nombre Completo") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = "nombre",
+                                tint = naranjo
+                            )
+                        },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    )
 
-        TextField(
-            value = clave,
-            onValueChange = { clave = it },
-            label = { Text("Contraseña") },
-            singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth() // ← Agregado
-        )
+                    Spacer(Modifier.height(16.dp))
 
-        Spacer(Modifier.height(20.dp))
+                    // CORREO
+                    OutlinedTextField(
+                        value = correo,
+                        onValueChange = { correo = it },
+                        label = { Text("Correo Electrónico") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Email,
+                                contentDescription = "email",
+                                tint = naranjo
+                            )
+                        },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    )
 
-        TextField(
-            value = confirmClave,
-            onValueChange = { confirmClave = it },
-            label = { Text("Confirmar Contraseña") },
-            singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth() // ← Agregado
-        )
+                    Spacer(Modifier.height(16.dp))
 
-        Spacer(Modifier.height(20.dp))
+                    // CONTRASEÑA
+                    OutlinedTextField(
+                        value = clave,
+                        onValueChange = { clave = it },
+                        label = { Text("Contraseña") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Lock,
+                                contentDescription = "password",
+                                tint = naranjo
+                            )
+                        },
+                        singleLine = true,
+                        visualTransformation = PasswordVisualTransformation(),
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    )
 
-        Button(
-            onClick = {
-                validar()?.let { mensajeLocal = it } ?: run {
-                    onSubmitRegister(nombre.trim(), correo.trim(), clave.trim())
-                    mensajeLocal = ""
+                    Spacer(Modifier.height(16.dp))
+
+                    // CONFIRMAR CONTRASEÑA
+                    OutlinedTextField(
+                        value = confirmClave,
+                        onValueChange = { confirmClave = it },
+                        label = { Text("Confirmar Contraseña") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Lock,
+                                contentDescription = "password-confirm",
+                                tint = naranjo
+                            )
+                        },
+                        singleLine = true,
+                        visualTransformation = PasswordVisualTransformation(),
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+
+                    Spacer(Modifier.height(20.dp))
+
+                    // BOTÓN REGISTRAR
+                    Button(
+                        onClick = {
+                            validar()?.let { mensajeLocal = it } ?: run {
+                                onSubmitRegister(nombre.trim(), correo.trim(), clave.trim())
+                                mensajeLocal = ""
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = naranjo,
+                            contentColor = Color.White
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp),
+                        shape = RoundedCornerShape(30.dp)
+                    ) {
+                        Text("Registrar", fontSize = 16.sp)
+                    }
+
+                    Spacer(Modifier.height(12.dp))
+
+                    // BOTÓN INICIAR SESIÓN
+                    OutlinedButton(
+                        onClick = onGoToLogin,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp),
+                        shape = RoundedCornerShape(30.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = naranjo
+                        )
+                    ) {
+                        Text("Iniciar Sesión", fontSize = 16.sp)
+                    }
                 }
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = naranjo,
-                contentColor   = Color.White
-            ),
-            modifier = Modifier.fillMaxWidth()
-        ) { Text("Registrar") }
+            }
 
-        Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(16.dp))
 
-        Button(
-            onClick = onGoToLogin,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = naranjo,
-                contentColor   = Color.White
-            ),
-            modifier = Modifier.fillMaxWidth()
-        ) { Text("Iniciar Sesión") }
+            if (mensajeLocal.isNotEmpty()) {
+                Text(mensajeLocal, color = Color(0xFFD32F2F))
+            }
 
-        if (mensajeLocal.isNotEmpty()) {
-            Spacer(Modifier.height(12.dp))
-            Text(
-                text = mensajeLocal,
-                fontSize = 16.sp,
-                color = Color(0xFFC62828)
-            )
-        }
-        if (!snack.isNullOrBlank()) {
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = snack,
-                fontSize = 16.sp,
-                color = if (snack.contains("exitoso", true)) Color(0xFF2E7D32) else Color(0xFFC62828)
-            )
+            if (!snack.isNullOrBlank()) {
+                Text(
+                    snack,
+                    color = if (snack.contains("exitoso", true)) Color(0xFF2E7D32) else Color(0xFFD32F2F)
+                )
+            }
         }
     }
 }

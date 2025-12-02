@@ -28,7 +28,7 @@ fun NosotrosScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            // Top bar - Fijo en la parte superior
+            // Top bar
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
